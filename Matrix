@@ -1,0 +1,140 @@
+{
+  "data": {"name": "dataset"},
+  "transform": [
+    {
+      "calculate": "datum['__selected__']== 'off' ? 0\n        :datum['Count of JC']",
+      "as": "Count of JC_Selected"
+    }
+  ],
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "name": "Main Matrix",
+          "mark": {
+            "type": "rect",
+            "tooltip": {
+              "content": "data"
+            }
+          },
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "sort": null
+            },
+            "y": {
+              "field": "Month Name",
+              "sort": null
+            },
+            "fill": {
+              "field": "Sum Gross Amnt",
+              "type": "quantitative",
+              "legend": null,
+              "scale": {
+                "range": [
+                  "#D5E9F9",
+                  "#25476E"
+                ]
+              }
+            },
+            "opacity": {
+              "condition": {
+                "test": {
+                  "field": "__selected__",
+                  "equal": "off"
+                },
+                "value": 0.5
+              },
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Marginal bars (row)",
+          "width": 75,
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "height": {"band": 0.8},
+                "opacity": 0.3
+              },
+              "encoding": {
+                "x": {
+                  "field": "Count of JC",
+                  "aggregate": "sum"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "bar",
+                "height": {"band": 0.8},
+                "tooltip": {
+                  "content": "data"
+                }
+              }
+            }
+          ],
+          "encoding": {
+            "y": {
+              "field": "Month Name",
+              "sort": null,
+              "axis": null
+            },
+            "x": {
+              "field": "Count of JC_Selected",
+              "type": "quantitative",
+              "aggregate": "sum"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "hconcat": [
+        {
+          "name": "Marginal bars (col)",
+          "height": 35,
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "width": {"band": 0.8},
+                "opacity": 0.3
+              },
+              "encoding": {
+                "y": {
+                  "field": "  of JC",
+                  "aggregate": "sum"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "bar",
+                "height": {"band": 0.8},
+                
+                "tooltip": {
+                  "content": "data"
+                }
+              }
+            }
+          ],
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "axis": null
+            },
+            "y": {
+              "field": "Count of JC_Selected",
+              "type": "quantitative",
+              "aggregate": "sum",
+              "scale": {"reverse": true}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
