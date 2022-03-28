@@ -1,0 +1,30 @@
+{
+  "view": {
+    "stroke": "transparent",
+    "height": {"step": 25},
+    "width": {"step": 50}
+  },
+  "font": "Segoe UI",
+  "scale": {"bandPaddingInner": 0.05},
+  "padding": 0,
+  "concat": {"spacing": 2},
+  "axis": {
+    "title": null,
+    "labelFontSize": 12,
+    "labelPadding": 10,
+    "ticks": false,
+    "domain": true,
+    "domainWidth": 2,
+    "domainColor": "black",
+    "domainCap": "square"
+  },
+  "axisX": {
+    "LableAngle": 0,
+    "orient": "top"
+  },
+  "axisQuantitative": {
+    "grid": false,
+    "label": false,
+    "domain": false
+  }
+}
