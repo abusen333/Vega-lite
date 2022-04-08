@@ -1,4 +1,0 @@
-    "tooltip": [
-    {"field": "year", "type": "quantitative"},
-    {"field": "yield"}
-    ]

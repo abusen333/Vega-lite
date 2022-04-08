@@ -1,0 +1,16 @@
+    "tooltip": [
+    {"field": "year", "type": "quantitative"},
+    {"field": "yield"}
+    ]
+    -------------------------------------------
+    
+    "opacity": {
+      "condition": {
+        "test": {
+          "field": "__selected__",
+          "equal": "off"
+        },
+        "value": 0.3
+      },
+      "value": 1
+    }
