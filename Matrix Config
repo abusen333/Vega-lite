@@ -19,7 +19,7 @@
     "domainCap": "square"
   },
   "axisX": {
-    "LableAngle": 0,
+    "labelAngle": 0,
     "orient": "top"
   },
   "axisQuantitative": {
