@@ -1,0 +1,8 @@
+  "encoding": {
+    "x": {
+      ...
+      "axis": {
+        "format": "MMM yyyy",
+        "formatType": "pbiFormat"
+      }
+    }
