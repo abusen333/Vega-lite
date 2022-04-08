@@ -1,0 +1,95 @@
+Specifications:
+{
+  "data": {"name": "dataset"},
+  "width": {"step": 60},
+  "params": [
+    {"name": "bwActual", "value": 0.8},
+    {"name": "bwDelta", "value": 0.5}
+  ],
+  "transform": [
+    {
+      "calculate": "datum['Count_JC'] >= datum['Count_JC_SPLY']",
+      "as": "delta_positive"
+    },
+    {
+      "calculate": "datum['delta_positive'] ? '#83C79B' :'#8D1D1C'",
+      "as": "delta_bar_color"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "tooltip": true,
+        "width": {
+          "expr": "bandwidth('x') * bwActual"
+        },
+        "style": "bar_actual"
+      }
+    },
+    {
+      "description": "Delta Bar",
+      "mark": {
+        "type": "bar",
+        "tooltip": {"content": "data"},
+        "color":{
+          "expr":"datum['delta_bar_color']"
+        },
+        "xOffset": {
+          "expr": "bandwidth('x') * (bwActual - bwDelta)/2"
+        },
+        "width": {
+          "expr": "bandwidth('x') * bwDelta"
+        }
+      },
+      "encoding": {
+        "y2": {"field": "Count_JC_SPLY"}
+      }
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "End of Month",
+      "type": "nominal",
+      "sort": null,
+      "axis": {
+        "format": "MMM yy",
+        "formatType": "pbiFormat"
+      }
+    },
+    "y": {
+      "field": "Count_JC",
+      "type": "quantitative"
+    },
+    "opacity": {
+      "condition": {
+        "test": {
+          "field": "__selected__",
+          "equal": "off"
+        },
+        "value": 0.3
+      },
+      "value": 1
+    }
+  }
+}
+
+Config :
+
+{
+  "view": {"stroke": "transparent"},
+  "font": "Segoe UI",
+  "axis": {
+    "title": "",
+    "grid": false,
+    "domainWidth": 2,
+    "domainColor": "black",
+    "labelAngle": 0,
+    "labelFontSize": 12
+  },
+  "axisY": {"disable": true},
+  "style": {
+    "bar_actual": {"color": "#404040"}
+  }
+}
+
