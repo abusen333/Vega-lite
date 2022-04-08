@@ -2,6 +2,8 @@
     {"field": "year", "type": "quantitative"},
     {"field": "yield"}
     ]
+   -----------------------------------
+    "tooltip": {"content": "data"}, // Debuging mode
     -------------------------------------------
     
     "opacity": {
