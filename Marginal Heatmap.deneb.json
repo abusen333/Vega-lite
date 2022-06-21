@@ -1,0 +1,269 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.1.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.2.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": true,
+      "dataPointLimit": 250
+    },
+    "information": {
+      "name": "Marginal Heatmap",
+      "description": "Heatmap with shading by one measure, and marginal bars representing another. Bars are also shaded to represent density of the first measure.",
+      "author": "Daniel Marsh-Patrick",
+      "uuid": "2013a00b-528b-4902-9805-1440d9266b5d",
+      "generated": "2022-02-22T04:34:51.008Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "Y-Axis",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "X-Axis",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__2__",
+        "name": "Color Measure",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      },
+      {
+        "key": "__3__",
+        "name": "Bar Measure",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "fieldTitle": "plain",
+    "view": {
+      "stroke": "transparent",
+      "height": { "step": 21 },
+      "width": { "step": 40 }
+    },
+    "font": "Segoe UI",
+    "scale": { "bandPaddingInner": 0.05 },
+    "padding": 0,
+    "concat": { "spacing": 2 },
+    "axis": {
+      "title": null,
+      "labelFontSize": 14,
+      "labelPadding": 10,
+      "ticks": false,
+      "domain": true,
+      "domainWidth": 2,
+      "domainColor": "black",
+      "domainCap": "square"
+    },
+    "axisX": {
+      "labelAngle": 0,
+      "orient": "top"
+    },
+    "axisQuantitative": {
+      "grid": false,
+      "labels": false,
+      "domain": false
+    }
+  },
+  "data": { "name": "dataset" },
+  "transform": [
+    {
+      "calculate": "datum['__selected__'] == 'off' ? 0 : datum['__3__']",
+      "as": "Messages_Selected"
+    }
+  ],
+  "resolve": {
+    "scale": { "color": "independent" }
+  },
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "name": "Main matrix",
+          "mark": {
+            "type": "rect",
+            "tooltip": true
+          },
+          "encoding": {
+            "x": {
+              "field": "__1__",
+              "sort": null
+            },
+            "y": {
+              "field": "__0__",
+              "sort": null
+            },
+            "fill": {
+              "field": "__2__",
+              "type": "quantitative",
+              "legend": null,
+              "scale": {
+                "range": ["#D5E9F9", "#25476E"]
+              }
+            },
+            "opacity": {
+              "condition": {
+                "test": {
+                  "field": "__selected__",
+                  "equal": "off"
+                },
+                "value": 0.3
+              },
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Marginal bars (row)",
+          "width": 75,
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "height": { "band": 0.8 },
+                "opacity": 0.3
+              },
+              "encoding": {
+                "x": {
+                  "field": "__3__",
+                  "aggregate": "sum"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "bar",
+                "height": { "band": 0.8 },
+                "tooltip": true
+              }
+            }
+          ],
+          "encoding": {
+            "y": {
+              "field": "__0__",
+              "sort": null,
+              "axis": null
+            },
+            "x": {
+              "field": "Messages_Selected",
+              "type": "quantitative",
+              "aggregate": "sum"
+            },
+            "color": {
+              "field": "__2__",
+              "type": "quantitative",
+              "aggregate": "sum",
+              "legend": null,
+              "scale": {
+                "range": ["#D7C1D9", "#4D3250"]
+              }
+            },
+            "tooltip": [
+              {
+                "field": "__0__",
+                "title": "Time of Day"
+              },
+              {
+                "field": "__3__",
+                "aggregate": "sum"
+              },
+              {
+                "field": "Messages_Selected",
+                "aggregate": "sum",
+                "title": "Messages (Highlighted)",
+                "formatType": "pbiFormat",
+                "format": "#,0"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "hconcat": [
+        {
+          "name": "Marginal bars (col)",
+          "height": 35,
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "width": { "band": 0.8 },
+                "opacity": 0.3
+              },
+              "encoding": {
+                "y": {
+                  "field": "__3__",
+                  "aggregate": "sum"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "bar",
+                "width": { "band": 0.8 },
+                "tooltip": true
+              }
+            }
+          ],
+          "encoding": {
+            "x": {
+              "field": "__1__",
+              "sort": null,
+              "axis": null
+            },
+            "y": {
+              "field": "Messages_Selected",
+              "type": "quantitative",
+              "aggregate": "sum",
+              "scale": { "reverse": true }
+            },
+            "color": {
+              "field": "__2__",
+              "type": "quantitative",
+              "aggregate": "sum",
+              "legend": null,
+              "scale": {
+                "range": ["#D7C1D9", "#4D3250"]
+              }
+            },
+            "tooltip": [
+              {
+                "field": "__1__",
+                "title": "Day of Week"
+              },
+              {
+                "field": "__3__",
+                "aggregate": "sum"
+              },
+              {
+                "field": "Messages_Selected",
+                "aggregate": "sum",
+                "title": "Messages (Highlighted)",
+                "formatType": "pbiFormat",
+                "format": "#,0"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
