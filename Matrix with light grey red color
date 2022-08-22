@@ -1,0 +1,115 @@
+{
+  "data": {"name": "dataset"},
+  "encoding": {
+    "y": {
+      "field": "Approver Role",
+      "title": null
+    },
+    "x": {
+      "field": "Channel",
+      "axis": {"orient": "top"}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rect"},
+      "encoding": {
+        "color": {
+          "field": "MAX Threshold Amt",
+          "scale": {
+            "scheme": "lightgreyred"
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "tooltip": true,
+        "frontSize": 14
+      },
+      "encoding": {
+        "text": {
+          "field": "MAX Threshold Amt",
+          "type": "Quantitative",
+          "format": ",.0f"
+        },
+        "color": {"value": "black"}
+      }
+    }
+  ],
+  
+  "config":
+  
+  {
+  "view": {"stroke": "transparent"},
+  "font": "Segoe UI",
+  "arc": {},
+  "area": {
+    "line": true,
+    "opacity": 0.6
+  },
+  "bar": {},
+  "line": {
+    "strokeWidth": 3,
+    "strokeCap": "round",
+    "strokeJoin": "round"
+  },
+  "path": {},
+  "point": {"filled": true, "size": 75},
+  "rect": {},
+  "shape": {},
+  "symbol": {
+    "strokeWidth": 1.5,
+    "size": 50
+  },
+  "text": {
+    "font": "Segoe UI",
+    "fontSize": 12,
+    "fill": "#605E5C"
+  },
+  "axis": {
+    "ticks": false,
+    "grid": false,
+    "domain": false,
+    "labelColor": "#000000",
+    "labelFontSize": 14,
+    "titleFont": "wf_standard-font, helvetica, arial, sans-serif",
+    "titleColor": "#070f25",
+    "titleFontSize": 16,
+    "titleFontWeight": "normal"
+  },
+  "axisQuantitative": {
+    "tickCount": 3,
+    "grid": true,
+    "gridColor": "#C8C6C4",
+    "gridDash": [1, 5],
+    "labelFlush": false
+  },
+  "axisX": {
+    "labelPadding": 5,
+    "labelAngle": 0
+  },
+  "axisY": {"labelPadding": 10},
+  "header": {
+    "titleFont": "wf_standard-font, helvetica, arial, sans-serif",
+    "titleFontSize": 16,
+    "titleColor": "#070f25",
+    "labelFont": "Segoe UI",
+    "labelFontSize": 25,
+    "labelColor": "#000000"
+  },
+  "legend": {
+    "titleFont": "Segoe UI",
+    "titleFontWeight": "bold",
+    "titleColor": "#605E5C",
+    "labelFont": "Segoe UI",
+    "labelFontSize": 13.333333333333332,
+    "labelColor": "#605E5C",
+    "symbolType": "circle",
+    "symbolSize": 75
+  }
+}
+}
+
