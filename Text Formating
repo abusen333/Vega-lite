@@ -1,0 +1,20 @@
+Millions format:
+        "axis": {
+            "format": "#,##,,.M",
+            "formatType": "pbiFormat"
+          }
+          
+          -----------------
+Billions  formating : 
+                "axis": {
+        "format": "$#0,,,.0bn",
+        "formatType": "pbiFormat"
+      }
+      
+Month year  formating :       
+      "axis": {
+        "format": "MMM yyyy",
+        "formatType": "pbiFormat"
+      }
+          
+       
