@@ -1,0 +1,164 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.1.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.2.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": false,
+      "dataPointLimit": 50
+    },
+    "information": {
+      "name": "Top N Bar Chart with Internal Labels and Values",
+      "description": "A horizontal bar chart using space-saving internal labels and values as well as screen widgets for Top N filtering and bar corner radius",
+      "author": "Greg Philps",
+      "uuid": "36fe9379-8538-4718-8ba6-0e3fb3e1ea2d",
+      "generated": "2022-02-08T20:41:50.326Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "Country",
+        "description": "The category to be used for the Y-axis",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "Total Sales",
+        "description": "The value to be used for the X-axis",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "autosize": {
+      "type": "fit",
+      "contains": "padding"
+    }
+  },
+  "title": {
+    "text": "<<Visual Title - Top N Bar Chart with Internal Labels and Values>>",
+    "anchor": "start",
+    "align": "left",
+    "font": "Verdana",
+    "fontSize": 16,
+    "fontWeight": "bold",
+    "offset": 10
+  },
+  "height": 500,
+  "params": [
+    {
+      "name": "top_n",
+      "value": 5,
+      "bind": {
+        "input": "range",
+        "min": 5,
+        "max": 10,
+        "step": 1
+      }
+    },
+    {
+      "name": "corner_radius",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 50,
+        "step": 1
+      }
+    }
+  ],
+  "transform": [
+    {
+      "window": [
+        {"op": "rank", "as": "rank"}
+      ],
+      "sort": [
+        {
+          "field": "__1__",
+          "order": "descending"
+        }
+      ]
+    },
+    {"filter": "datum.rank <= top_n"}
+  ],
+  "data": {"name": "dataset"},
+  "encoding": {
+    "y": {
+      "field": "__0__",
+      "type": "nominal",
+      "axis": null,
+      "sort": {
+        "op": "sum",
+        "field": "__1__",
+        "order": "descending"
+      }
+    }
+  },
+  "layer": [
+    {
+      "description": "COUNTRY BAR",
+      "mark": {
+        "type": "bar",
+        "cornerRadius": {
+          "expr": "corner_radius"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "__1__",
+          "type": "quantitative",
+          "axis": {
+            "tickCount": 5,
+            "format": "#0,,.M",
+            "formatType": "pbiFormat"
+          }
+        }
+      }
+    },
+    {
+      "description": "COUNTRY LABEL",
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "x": 5,
+        "color": "#FFFFFF",
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": {"field": "__0__"}
+      }
+    },
+    {
+      "description": "SALES LABEL",
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -5,
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "color": "#FFFFFF"
+      },
+      "encoding": {
+        "x": {
+          "field": "__1__",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "__1__",
+          "type": "quantitative",
+          "format": "#0,,.0M",
+          "formatType": "pbiFormat"
+        }
+      }
+    }
+  ]
+}
