@@ -1,0 +1,312 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.1.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.2.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": false,
+      "dataPointLimit": 50
+    },
+    "information": {
+      "name": "Bullet Chart",
+      "description": "An overlapping bar chart showing variable-height channel sales bars on top of a total sales bar inclusing a tick at the 50 percent mark of total sales.",
+      "author": "Greg Philps",
+      "uuid": "202c5944-1eef-4f06-bdfe-7aa39d58c121",
+      "generated": "2022-02-01T21:11:58.317Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "Category",
+        "description": "Category",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "Total Sales",
+        "description": "The total sales for the category",
+        "type": "numeric",
+        "kind": "measure"
+      },
+      {
+        "key": "__2__",
+        "name": "Middle Channel Sales",
+        "description": "The channel sales that are the middle component of the total sales for the category",
+        "type": "numeric",
+        "kind": "measure"
+      },
+      {
+        "key": "__3__",
+        "name": "Smaller Channel Sales",
+        "description": "The channel sales that are the smallest component of the total sales for the category",
+        "type": "numeric",
+        "kind": "measure"
+      },
+      {
+        "key": "__4__",
+        "name": "Larger Channel Sales",
+        "description": "The channel sales that are the largest component of the total sales for the category",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "autosize": {
+      "type": "fit",
+      "contains": "padding"
+    }
+  },
+  "title": {
+    "text": "<<Visual Title - Bullet Chart>>",
+    "anchor": "start",
+    "align": "left",
+    "font": "Verdana",
+    "fontSize": 16,
+    "fontWeight": "bold",
+    "offset": 10
+  },
+  "data": {"name": "dataset"},
+  "params": [
+    {"name": "bar0_height", "value": 1},
+    {
+      "name": "bar1_height",
+      "value": 0.2
+    },
+    {
+      "name": "bar2_height",
+      "value": 0.5
+    },
+    {
+      "name": "bar3_height",
+      "value": 0.8
+    },
+    {
+      "name": "bar0_color",
+      "value": "#E6E6E6"
+    },
+    {
+      "name": "bar1_color",
+      "value": "#35558A"
+    },
+    {
+      "name": "bar2_color",
+      "value": "#6A8CC3"
+    },
+    {
+      "name": "bar3_color",
+      "value": "#B2C7D5"
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "datum['__1__'] / 2",
+      "as": "Fifty Percent Total Sales"
+    },
+    {
+      "calculate": "datum['__4__'] / datum['__1__']",
+      "as": "Wholesale Ratio"
+    },
+    {
+      "calculate": "datum['__2__'] / datum['__1__']",
+      "as": "Distributor Ratio"
+    },
+    {
+      "calculate": "datum['__3__'] / datum['__1__']",
+      "as": "Export Ratio"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "__0__",
+      "type": "ordinal",
+      "title": "<<Y-Axis Title - Country>>",
+      "sort": {
+        "op": "sum",
+        "field": "__1__",
+        "order": "descending"
+      },
+      "axis": {
+        "tickCount": 5,
+        "domain": false
+      }
+    }
+  },
+  "layer": [
+    {
+      "description": "TOTAL SALES",
+      "mark": {
+        "type": "bar",
+        "tooltip": true,
+        "width": {
+          "expr": "bandwidth('y') * bar0_height"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "__1__",
+          "type": "quantitative",
+          "title": "<<X-Axis Title - Total Sales>>",
+          "axis": {
+            "tickCount": 5,
+            "format": "#,##0,. K",
+            "formatType": "pbiFormat"
+          }
+        },
+        "color": {
+          "value": {
+            "expr": "bar0_color"
+          }
+        },
+        "tooltip": [
+          {"field": "__0__"},
+          {
+            "field": "__1__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          }
+        ]
+      }
+    },
+    {
+      "description": "50 PERCENT TOTAL SALES TICK",
+      "mark": {
+        "type": "tick",
+        "color": "black",
+        "height": {
+          "expr": "bandwidth('y') * bar0_height"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "Fifty Percent Total Sales",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "description": "EXPORT SALES",
+      "mark": {
+        "type": "bar",
+        "tooltip": true,
+        "size": {
+          "expr": "bandwidth('y') * bar3_height"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "__3__",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": {
+            "expr": "bar3_color"
+          }
+        },
+        "tooltip": [
+          {"field": "__0__"},
+          {
+            "field": "Export Ratio",
+            "format": "#%",
+            "formatType": "pbiFormat"
+          },
+          {
+            "field": "__3__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          },
+          {
+            "field": "__1__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          }
+        ]
+      }
+    },
+    {
+      "description": "DISTRIBUTOR SALES",
+      "mark": {
+        "type": "bar",
+        "tooltip": true,
+        "size": {
+          "expr": "bandwidth('y') * bar2_height"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "__2__",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": {
+            "expr": "bar2_color"
+          }
+        },
+        "tooltip": [
+          {"field": "__0__"},
+          {
+            "field": "Distributor Ratio",
+            "format": "#%",
+            "formatType": "pbiFormat"
+          },
+          {
+            "field": "__2__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          },
+          {
+            "field": "__1__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          }
+        ]
+      }
+    },
+    {
+      "description": "WHOLESALE SALES",
+      "mark": {
+        "type": "bar",
+        "tooltip": true,
+        "size": {
+          "expr": "bandwidth('y') * bar1_height"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "__4__",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": {
+            "expr": "bar1_color"
+          }
+        },
+        "tooltip": [
+          {"field": "__0__"},
+          {
+            "field": "Wholesale Ratio",
+            "format": "#%",
+            "formatType": "pbiFormat"
+          },
+          {
+            "field": "__4__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          },
+          {
+            "field": "__1__",
+            "format": "#,##0.",
+            "formatType": "pbiFormat"
+          }
+        ]
+      }
+    }
+  ]
+}
