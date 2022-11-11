@@ -1,0 +1,199 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.1.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.2.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": false,
+      "dataPointLimit": 50
+    },
+    "information": {
+      "name": "Linked Charts",
+      "description": "An illustration of using the \"brush\" feature in Vega-Lite to select a region in a primary visual for use in a secondary linked visual",
+      "author": "Greg Philps",
+      "uuid": "76ae2c80-9640-4616-bbeb-9480163105d2",
+      "generated": "2022-02-12T19:10:02.769Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "Date",
+        "description": "The temporal value for the X-axis in the primary visual",
+        "type": "dateTime",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "Product",
+        "description": "The nominal value for the legend in the primary visual; The nominal value for the Y-axis in the secondary visual",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__2__",
+        "name": "Total Sales",
+        "description": "The quantitative value for the Y-axis in the primary visual; The quantitative value for the X-axis in the secondary visual",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "autosize": {
+      "type": "fit",
+      "contains": "padding"
+    },
+    "view": {"stroke": "transparent"},
+    "font": "Segoe UI",
+    "arc": {},
+    "area": {
+      "line": true,
+      "opacity": 0.6
+    },
+    "bar": {},
+    "line": {
+      "strokeWidth": 3,
+      "strokeCap": "round",
+      "strokeJoin": "round"
+    },
+    "path": {},
+    "point": {
+      "filled": true,
+      "size": 75
+    },
+    "rect": {},
+    "shape": {},
+    "symbol": {
+      "strokeWidth": 1.5,
+      "size": 50
+    },
+    "text": {
+      "font": "Segoe UI",
+      "fontSize": 12,
+      "fill": "#605E5C"
+    },
+    "axis": {
+      "ticks": false,
+      "grid": false,
+      "domain": false,
+      "labelColor": "#605E5C",
+      "labelFontSize": 12,
+      "titleFont": "wf_standard-font, helvetica, arial, sans-serif",
+      "titleColor": "#252423",
+      "titleFontSize": 16,
+      "titleFontWeight": "normal"
+    },
+    "axisQuantitative": {
+      "tickCount": 3,
+      "grid": true,
+      "gridColor": "#C8C6C4",
+      "gridDash": [1, 5],
+      "labelFlush": false
+    },
+    "axisBand": {"tickExtra": true},
+    "axisX": {"labelPadding": 5},
+    "axisY": {"labelPadding": 10},
+    "header": {
+      "titleFont": "wf_standard-font, helvetica, arial, sans-serif",
+      "titleFontSize": 16,
+      "titleColor": "#252423",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 13.333333333333332,
+      "labelColor": "#605E5C"
+    },
+    "legend": {
+      "titleFont": "Segoe UI",
+      "titleFontWeight": "bold",
+      "titleColor": "#605E5C",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 13.333333333333332,
+      "labelColor": "#605E5C",
+      "symbolType": "circle",
+      "symbolSize": 75
+    }
+  },
+  "data": {"name": "dataset"},
+  "vconcat": [
+    {
+      "description": "SCATTER CHART",
+      "width": 850,
+      "height": 350,
+      "mark": "point",
+      "title": {
+        "text": "<<Visual Title - Sales by Date (Primary)>>",
+        "anchor": "start"
+      },
+      "selection": {
+        "brush": {
+          "type": "interval",
+          "encodings": ["x"]
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "__0__",
+          "timeUnit": "monthdate",
+          "axis": {"format": "%b"},
+          "title": "__0__"
+        },
+        "y": {
+          "field": "__2__",
+          "type": "quantitative"
+        },
+        "color": {
+          "condition": {
+            "param": "brush",
+            "field": "__1__",
+            "type": "nominal",
+            "scale": {
+              "scheme": "pbiColorNominal"
+            }
+          },
+          "value": "lightgray"
+        },
+        "size": {
+          "field": "__2__",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "description": "BAR CHART",
+      "width": 850,
+      "height": 100,
+      "mark": "bar",
+      "title": {
+        "text": "<<Visual Title - Sales by Product (Secondary)>>",
+        "anchor": "start"
+      },
+      "tooltip": true,
+      "encoding": {
+        "x": {
+          "aggregate": "sum",
+          "field": "__2__",
+          "title": null,
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "__1__",
+          "type": "nominal"
+        },
+        "color": {
+          "field": "__1__",
+          "scale": {
+            "scheme": "pbiColorNominal"
+          }
+        }
+      },
+      "transform": [
+        {"filter": {"param": "brush"}}
+      ]
+    }
+  ]
+}
