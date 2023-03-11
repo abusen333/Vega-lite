@@ -1,0 +1,271 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.4.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.4.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": true,
+      "highlight": true,
+      "dataPointLimit": 50
+    },
+    "information": {
+      "name": "[No Name Provided]",
+      "description": "[No Description Provided]",
+      "author": "[No Author Details Provided]",
+      "uuid": "db71e5c8-1278-4e0c-a4d7-282938e369c3",
+      "generated": "2023-03-11T06:00:04.032Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "Lead Branch",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "Opportunity Branch",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__2__",
+        "name": "Count of Leads Transferred",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      },
+      {
+        "key": "__3__",
+        "name": "LeadBrach Rank",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      },
+      {
+        "key": "__4__",
+        "name": "OppBrach Rank",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "fieldTitle": "plain",
+    "view": {
+      "stroke": "transparent",
+      "height": {"step": 29},
+      "width": {"step": 50}
+    },
+    "font": "Segoe UI",
+    "scale": {"bandPaddingInner": 0.05},
+    "padding": 0,
+    "concat": {"spacing": 2},
+    "axis": {
+      "labelFontSize": 14,
+      "labelPadding": 5,
+      "ticks": false,
+      "domain": true,
+      "domainWidth": 2,
+      "domainColor": "black",
+      "domainCap": "square"
+    },
+    "axisX": {
+      "labelAngle": -90,
+      "orient": "top",
+      "fontSize": 15
+    },
+    "axisQuantitative": {
+      "title": null,
+      "grid": false,
+      "labels": false,
+      "domain": false
+    }
+  },
+  "data": {"name": "dataset"},
+  "transform": [
+    {
+      "calculate": "datum['__selected__'] == 'off' ? 0 : datum['__2__']",
+      "as": "Count of Leads Transferred_Selected"
+    }
+  ],
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "name": "Main matrix",
+          "mark": {
+            "type": "rect",
+            "tooltip": true
+          },
+          "encoding": {
+            "x": {
+              "field": "__1__",
+              "sort": null
+            },
+            "y": {
+              "field": "__0__",
+              "sort": null
+            },
+            "color": {
+              "field": "__2__",
+              "type": "quantitative",
+              "scale": {
+                "type": "log",
+                "scheme": "plasma",
+                "reverse": true
+              }
+            },
+            "opacity": {
+              "condition": {
+                "test": {
+                  "field": "__selected__",
+                  "equal": "off"
+                },
+                "value": 0.1
+              },
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Marginal bars (row)",
+          "width": 75,
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "height": {"band": 0.8},
+                "opacity": 0.3
+              },
+              "encoding": {
+                "x": {
+                  "field": "__2__",
+                  "aggregate": "sum"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "bar",
+                "height": {"band": 0.8},
+                "tooltip": true
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "xOffset": 10
+              },
+              "encoding": {
+                "text": {
+                  "field": "__2__",
+                  "type": "quantitative",
+                  "aggregate": "sum"
+                }
+              }
+            }
+          ],
+          "encoding": {
+            "y": {
+              "field": "__0__",
+              "sort": null,
+              "axis": null
+            },
+            "x": {
+              "field": "Count of Leads Transferred_Selected",
+              "type": "quantitative",
+              "aggregate": "sum",
+              "sort": null
+            },
+            "color": {
+              "field": "__2__",
+              "type": "quantitative",
+              "aggregate": "sum",
+              "legend": null,
+              "scale": {
+                "type": "log",
+                "scheme": "plasma",
+                "reverse": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Marginal bars (col)",
+      "height": 40,
+      "layer": [
+        {
+          "mark": {
+            "type": "bar",
+            "width": {"band": 0.8},
+            "opacity": 0.3
+          },
+          "encoding": {
+            "y": {
+              "field": "__2__",
+              "aggregate": "sum",
+              "sort": null
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "bar",
+            "width": {"band": 0.8},
+            "tooltip": true
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "yOffset": 10
+          },
+          "encoding": {
+            "text": {
+              "field": "__2__",
+              "type": "quantitative",
+              "aggregate": "sum"
+            }
+          }
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "__1__",
+          "sort": {"field": "__4__"},
+          "axis": null
+        },
+        "y": {
+          "field": "Count of Leads Transferred_Selected",
+          "sort": null,
+          "type": "quantitative",
+          "aggregate": "sum",
+          "scale": {"reverse": true}
+        },
+        "color": {
+          "field": "__2__",
+          "type": "quantitative",
+          "aggregate": "sum",
+          "legend": null,
+          "scale": {
+            "type": "log",
+            "scheme": "plasma",
+            "reverse": true
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.4.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.4.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": true,
+      "highlight": true,
+      "dataPointLimit": 50
+    },
+    "information": {
+      "name": "[No Name Provided]",
+      "description": "[No Description Provided]",
+      "author": "[No Author Details Provided]",
+      "uuid": "ee929f2d-c9e3-4e53-a371-b06b668ed9f4",
+      "generated": "2023-03-11T06:01:23.465Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "Likelihood Rate",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "Impact Rate",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__2__",
+        "name": "CATEGORYSPLIT",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__3__",
+        "name": "CURRENT_RISK_RATING",
+        "description": "",
+        "type": "numeric",
+        "kind": "column"
+      },
+      {
+        "key": "__4__",
+        "name": "Impact Long Description",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__5__",
+        "name": "RISK_SN_PK",
+        "description": "",
+        "type": "numeric",
+        "kind": "column"
+      },
+      {
+        "key": "__6__",
+        "name": "Likelihood Long Description",
+        "description": "",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__7__",
+        "name": "# Risk Events",
+        "description": "",
+        "type": "numeric",
+        "kind": "measure"
+      }
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "font": "Segoe UI",
+    "arc": {},
+    "area": {
+      "line": true,
+      "opacity": 0.6
+    },
+    "bar": {},
+    "line": {
+      "strokeWidth": 3,
+      "strokeCap": "round",
+      "strokeJoin": "round"
+    },
+    "path": {},
+    "point": {
+      "filled": true,
+      "size": 75
+    },
+    "rect": {},
+    "shape": {},
+    "symbol": {
+      "strokeWidth": 1.5,
+      "size": 50
+    },
+    "text": {
+      "font": "Segoe UI",
+      "fontSize": 16,
+      "fill": "black"
+    },
+    "axis": {
+      "ticks": false,
+      "grid": true,
+      "gridColor": "#C8C8C8",
+      "tickBand": "extent",
+      "domain": true,
+      "labelColor": "black",
+      "labelFontSize": 10,
+      "labelFontWeight": 550,
+      "titleFont": "Segoe UI",
+      "titleColor": "#070f25",
+      "titleFontSize": 14,
+      "titleFontWeight": "bold"
+    },
+    "axisQuantitative": {
+      "tickCount": 3,
+      "grid": true,
+      "gridColor": "#C8C8C8",
+      "gridDash": [1, 5],
+      "labelFlush": true
+    },
+    "axisX": {"labelPadding": 5},
+    "axisY": {"labelPadding": 10},
+    "header": {
+      "titleFont": "wf_standard-font, helvetica, arial, sans-serif",
+      "titleFontSize": 14,
+      "titleColor": "#070f25",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 13.333333333333332,
+      "labelColor": "#666666"
+    },
+    "legend": {
+      "titleFont": "Segoe UI",
+      "titleFontWeight": "bold",
+      "titleColor": "black",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 12,
+      "labelColor": "black",
+      "symbolType": "circle",
+      "symbolSize": 75
+    }
+  },
+  "data": {"name": "dataset"},
+  "width": {"step": 75},
+  "height": {"step": 40},
+  "padding": 0,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "transform": [
+    {
+      "calculate": "datum.__selected__ === 'off' ? 0 : datum['__7__']",
+      "as": "Val1_Selected"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "__0__",
+      "type": "nominal",
+      "axis": {
+        "title": "__0__",
+        "sort": [
+          "(1) Rare",
+          "(2) Unlikely",
+          "(3) Possible",
+          "(4) Likely",
+          "(5) Almost Certain"
+        ],
+        "labelAngle": 0,
+        "orient": "bottom"
+      }
+    },
+    "y": {
+      "field": "__1__",
+      "type": "nominal",
+      "sort": [
+        "(5) Catastrophic",
+        "(4) Major",
+        "(3) Moderate",
+        "(2) Minor",
+        "(1) Negligible"
+      ],
+      "axis": {"title": "__1__"}
+    }
+  },
+  "layer": [
+    {
+      "name": "layer underneath layer",
+      "mark": {"type": "rect"},
+      "encoding": {
+        "color": {
+          "field": "__3__",
+          "type": "quantitative",
+          "scale": {
+            "scheme": "redyellowgreen",
+            "reverse": true,
+            "domain": [0, 25],
+            "domainMid": 10,
+            "domainMax": 25,
+            "domainMin": 1,
+            "range": [
+              "#FF0000",
+              "#FFFF00",
+              "#00FF00"
+            ],
+            "rangeMax": "#00FF00",
+            "rangeMid": "#FFFF00"
+          },
+          "legend": {
+            "title": "Risk Rating"
+          }
+        },
+        "opacity": {
+          "condition": {
+            "test": {
+              "field": "__selected__",
+              "equal": "off"
+            },
+            "value": 0.04
+          },
+          "value": 1
+        },
+        "tooltip": [
+          {
+            "field": "__6__",
+            "type": "nominal",
+            "title": "Likelihood Description"
+          },
+          {
+            "field": "__4__",
+            "type": "nominal",
+            "title": "Impact Description"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Add a text mark to show the number of risk events.",
+      "mark": {
+        "type": "text",
+        "color": "black"
+      },
+      "encoding": {
+        "text": {
+          "field": "__7__",
+          "type": "quantitative",
+          "aggregate": "count"
+        },
+        "tooltip": [
+          {
+            "field": "__6__",
+            "type": "nominal",
+            "title": "Likelihood Description"
+          },
+          {
+            "field": "__4__",
+            "type": "nominal",
+            "title": "Impact Description"
+          }
+        ]
+      }
+    }
+  ]
+}

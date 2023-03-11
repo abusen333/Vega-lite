@@ -1,0 +1,373 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "usermeta": {
+    "deneb": {
+      "build": "1.4.0.0",
+      "metaVersion": 1,
+      "provider": "vegaLite",
+      "providerVersion": "5.4.0"
+    },
+    "interactivity": {
+      "tooltip": true,
+      "contextMenu": true,
+      "selection": true,
+      "highlight": true,
+      "dataPointLimit": 250
+    },
+    "information": {
+      "name": "Table with marginal bars",
+      "description": "[No Description Provided]",
+      "author": "[No Author Details Provided]",
+      "uuid": "06d7048e-016d-475d-97f7-a0888e371074",
+      "generated": "2023-03-11T05:58:24.160Z"
+    },
+    "dataset": [
+      {
+        "key": "__0__",
+        "name": "BUSINESS",
+        "description": "Rows",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__1__",
+        "name": "CATEGORYSPLIT",
+        "description": "Columns",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__2__",
+        "name": "RISK_CATEGORY",
+        "description": "Columns",
+        "type": "text",
+        "kind": "column"
+      },
+      {
+        "key": "__3__",
+        "name": "RISK_SN_PK",
+        "description": "Primary Key to count ",
+        "type": "numeric",
+        "kind": "column"
+      }
+    ]
+  },
+  "config": {
+    "fieldTitle": "plain",
+    "view": {"stroke": "transparent"},
+    "font": "Segoe UI",
+    "scale": {"bandPaddingInner": 0.05},
+    "padding": 0,
+    "concat": {"spacing": 2},
+    "bar": {
+      "stroke": "gray",
+      "strokethichness": 5
+    },
+    "axis": {
+      "title": false,
+      "labelFontSize": 12,
+      "labelPadding": 10,
+      "ticks": false,
+      "domain": false,
+      "domainWidth": 2,
+      "domainColor": "black",
+      "domainCap": "square"
+    },
+    "axisX": {
+      "labelAngle": 0,
+      "orient": "top",
+      "domain": false
+    },
+    "axisY": {"domain": true},
+    "axisQuantitative": {
+      "grid": false,
+      "labels": false
+    }
+  },
+  "data": {"name": "dataset"},
+  "transform": [
+    {
+      "calculate": "datum['__selected__'] == 'off' ? 0 : datum['__3__']",
+      "as": "Messages_Selected"
+    },
+    {
+      "calculate": "datum['__selected__'] == 'off' ? 0 : datum['__3__']",
+      "as": "YOYSalesAmt_Selected"
+    },
+    {
+      "calculate": "datum['__3__'] < 0",
+      "as": "YOYValue_is_negative"
+    }
+  ],
+  "vconcat": [
+    {
+      "name": "Marginal bars (col)",
+      "height": 25,
+      "width": {"step": 85},
+      "layer": [
+        {
+          "mark": {
+            "type": "bar",
+            "width": {"band": 0.8},
+            "opacity": 0.3
+          },
+          "encoding": {
+            "y": {
+              "field": "__3__",
+              "aggregate": "count",
+              "axis": null
+            },
+            "fill": {
+              "field": "__1__",
+              "scale": {
+                "domain": [
+                  "Category A",
+                  "Category B",
+                  "Category C"
+                ],
+                "range": [
+                  "#ab1d1c",
+                  "#f48d21",
+                  "#b1b1b3"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "bar",
+            "width": {"band": 0.8},
+            "tooltip": true
+          },
+          "encoding": {
+            "fill": {
+              "field": "__1__",
+              "scale": {
+                "domain": [
+                  "Category A",
+                  "Category B",
+                  "Category C"
+                ],
+                "range": [
+                  "#ab1d1c",
+                  "#f48d21",
+                  "#b1b1b3"
+                ]
+              },
+              "legend": null
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "baseline": "bottom",
+            "dy": -5
+          },
+          "encoding": {
+            "y": {
+              "field": "__3__",
+              "aggregate": "count"
+            },
+            "text": {
+              "field": "__3____highlight",
+              "aggregate": "count",
+              "format": "0.0f"
+            }
+          }
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "__1__",
+          "sort": {"field": "__1__"},
+          "axis": {
+            "title": "",
+            "labelAngle": 0,
+            "orient": "bottom",
+            "labelFontSize": 10
+          }
+        },
+        "y": {
+          "field": "Messages_Selected",
+          "type": "quantitative",
+          "aggregate": "count",
+          "scale": {"reverse": false}
+        },
+        "tooltip": [
+          {
+            "field": "__1__",
+            "title": "Day of Week"
+          },
+          {
+            "field": "__3__",
+            "aggregate": "count"
+          },
+          {
+            "field": "Messages_Selected",
+            "aggregate": "count",
+            "title": "Messages (Highlighted)",
+            "format": "0.0f"
+          }
+        ]
+      }
+    },
+    {
+      "hconcat": [
+        {
+          "width": 250,
+          "height": {"step": 18},
+          "layer": [
+            {
+              "name": "Main matrix2",
+              "mark": {
+                "type": "rect",
+                "tooltip": true
+              },
+              "encoding": {
+                "x": {
+                  "field": "__1__",
+                  "axis": null,
+                  "sort": {
+                    "field": "__1__"
+                  }
+                },
+                "y": {
+                  "field": "__2__",
+                  "sort": {
+                    "op": "count",
+                    "field": "__3__",
+                    "order": "descending"
+                  }
+                },
+                "color": {
+                  "field": "__1__",
+                  "type": "nominal",
+                  "scale": {
+                    "domain": [
+                      "Category A",
+                      "Category B",
+                      "Category C"
+                    ],
+                    "range": [
+                      "#ab1d1c",
+                      "#f48d21",
+                      "#b1b1b3"
+                    ]
+                  },
+                  "legend": null
+                },
+                "opacity": {
+                  "aggregate": "count",
+                  "field": "__3__",
+                  "type": "quantitative",
+                  "scale": {
+                    "range": [0.3, 1]
+                  },
+                  "legend": null
+                }
+              }
+            },
+            {
+              "mark": {"type": "text"},
+              "encoding": {
+                "x": {
+                  "field": "__1__",
+                  "sort": null
+                },
+                "y": {
+                  "field": "__2__",
+                  "sort": {
+                    "op": "count",
+                    "field": "__3__",
+                    "order": "descending"
+                  }
+                },
+                "text": {
+                  "aggregate": "count",
+                  "field": "__3____highlight",
+                  "format": ".0f"
+                },
+                "color": {
+                  "value": "black"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Marginal bars (row)",
+          "width": 120,
+          "height": {"step": 18},
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "height": {"band": 0.8},
+                "opacity": 0.99
+              },
+              "encoding": {
+                "x": {
+                  "field": "__3__",
+                  "aggregate": "count"
+                },
+                "color": {
+                  "field": "__1__",
+                  "type": "nominal",
+                  "scale": {
+                    "range": [
+                      "#ab1d1c",
+                      "#f48d21",
+                      "#b1b1b3"
+                    ]
+                  },
+                  "legend": null
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "left",
+                "dx": 2
+              },
+              "encoding": {
+                "x": {
+                  "field": "__3__",
+                  "aggregate": "count"
+                },
+                "text": {
+                  "field": "__3____highlight",
+                  "aggregate": "count",
+                  "format": ".0f"
+                }
+              }
+            }
+          ],
+          "encoding": {
+            "y": {
+              "field": "__2__",
+              "sort": {
+                "op": "count",
+                "field": "__3__",
+                "order": "descending"
+              },
+              "axis": null
+            },
+            "x": {
+              "field": "Messages_Selected",
+              "type": "quantitative",
+              "aggregate": "count"
+            }
+          }
+        }
+      ],
+      "resolve": {
+        "scale": {
+          "color": "independent"
+        }
+      }
+    }
+  ]
+}
