@@ -16,3 +16,10 @@
       },
       "value": 1
     }
+    ------------------------------
+    # for Dynamic Selection
+      "transform": [
+    {
+      "calculate": "datum['__selected__'] == 'off' ? 0 : datum['Messages']",
+      "as": "Messages_Selected"
+    }
