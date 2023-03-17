@@ -23,3 +23,6 @@
       "calculate": "datum['__selected__'] == 'off' ? 0 : datum['Messages']",
       "as": "Value_Selected"
     }
+    --------------------------------------------
+    # Debugging 
+     "tooltip": {"content": "data"}
