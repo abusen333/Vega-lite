@@ -1,0 +1,28 @@
+{
+  "transform": [
+    {
+      "calculate": "if (isDefined(datum['Category']), datum['Category'], if (isDefined(datum['SubCategory']), datum['SubCategory'], datum['ProductName']))",
+      "as": "FP"
+    },
+    {
+      "params": [
+        {
+          "name": "CategoryField",
+          "select": {"type": "point", "fields": ["field"]},
+          "bind": {
+            "input": "select",
+            "options": ["Sub_Division", "Unit", "Gender"],
+            "labels": ["Sub Division", "Unit", "Gender"],
+            "name": "Select Category: "
+          }
+        }
+      ]
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {"field": {"param": "CategoryField"}, "type": "nominal"},
+    "y": {"aggregate": "sum", "field": "Sales", "type": "quantitative"},
+    "color": {"field": "FP", "type": "nominal"}
+  }
+}
