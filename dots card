@@ -4,6 +4,28 @@ GENERATEALL (
     VAR CurrentID = [Value]
     VAR RowNum = INT((CurrentID - 1) / 20)
     VAR ColNum = MOD(CurrentID - 1, 20)
+    VAR YourPercentage = 0.2962 // Hardcoded 29.62% for example
+    -- Alternatively use your actual measure:
+    -- VAR YourPercentage = [Your Percentage Measure] // Should be decimal (0.2962 for 29.62%)
+    VAR TotalDots = 100
+    VAR FilledDots = ROUND(YourPercentage * TotalDots, 0)
+    VAR IsFilled = IF(CurrentID <= FilledDots, 1, 0)
+    RETURN ROW(
+        "ID", CurrentID,
+        "Row", RowNum,
+        "Column", ColNum,
+        "IsFilled", IsFilled
+    )
+)
+
+
+
+DotsTable = 
+GENERATEALL (
+    GENERATESERIES(1, 100, 1),
+    VAR CurrentID = [Value]
+    VAR RowNum = INT((CurrentID - 1) / 20)
+    VAR ColNum = MOD(CurrentID - 1, 20)
     VAR YourPercentage = [Your Percentage Measure Value] // Replace with your actual measure
     VAR IsFilled = IF(CurrentID <= CEILING(YourPercentage * 100, 1), 1, 0)
     RETURN ROW(
