@@ -3,16 +3,26 @@
   "width": 400,
   "height": 200,
   "data": {
-    "name": "dataset"
+    "sequence": {
+      "start": 1,
+      "stop": 101,
+      "step": 1,
+      "as": "id"
+    }
   },
   "transform": [
     {
-      "calculate": "datum.YourPercentageMeasure * 100", 
-      "as": "percentage"
+      "lookup": "id",
+      "from": {
+        "data": {"name": "dataset"},
+        "key": "id",
+        "fields": ["YourPercentageMeasure"]
+      },
+      "default": {"YourPercentageMeasure": 0}
     },
     {
-      "window": [{"op": "rank", "as": "id"}],
-      "frame": [null, null]
+      "calculate": "datum.YourPercentageMeasure * 100", 
+      "as": "percentage"
     },
     {
       "calculate": "floor((datum.id - 1) / 20)", 
