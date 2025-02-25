@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 200,
+  "data": {
+    "name": "dataset"
+  },
+  "transform": [
+    {
+      "calculate": "datum.YourPercentageMeasure * 100", 
+      "as": "percentage"
+    },
+    {
+      "window": [{"op": "rank", "as": "id"}],
+      "frame": [null, null]
+    },
+    {
+      "calculate": "floor((datum.id - 1) / 20)", 
+      "as": "row"
+    },
+    {
+      "calculate": "(datum.id - 1) % 20", 
+      "as": "column"
+    },
+    {
+      "calculate": "datum.id <= ceil(datum.percentage)", 
+      "as": "isFilled"
+    }
+  ],
+  "mark": {"type": "circle", "size": 100},
+  "encoding": {
+    "x": {"field": "column", "type": "ordinal", "axis": null},
+    "y": {"field": "row", "type": "ordinal", "axis": null, "sort": "descending"},
+    "color": {
+      "field": "isFilled",
+      "type": "nominal",
+      "scale": {
+        "domain": [false, true],
+        "range": ["#D3D3D3", "#7BC77B"]
+      },
+      "legend": null
+    }
+  },
+  "config": {
+    "view": {"stroke": null}
+  }
+}
