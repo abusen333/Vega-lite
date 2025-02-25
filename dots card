@@ -14,7 +14,31 @@ GENERATEALL (
     )
 )
 
-
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 200,
+  "data": {
+    "name": "dataset"
+  },
+  "mark": {"type": "circle", "size": 100},
+  "encoding": {
+    "x": {"field": "Column", "type": "ordinal", "axis": null},
+    "y": {"field": "Row", "type": "ordinal", "axis": null, "sort": "descending"},
+    "color": {
+      "field": "IsFilled",
+      "type": "nominal",
+      "scale": {
+        "domain": [0, 1],
+        "range": ["#D3D3D3", "#7BC77B"]
+      },
+      "legend": null
+    }
+  },
+  "config": {
+    "view": {"stroke": null}
+  }
+}
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 400,
