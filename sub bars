@@ -1,0 +1,100 @@
+{
+  "data": {
+    "name": "dataset"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "y": {
+          "field": "Agent",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "Calls not Answered",
+          "type": "quantitative",
+          "aggregate": "sum"
+        },
+        "color": {
+          "field": "Topic"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "joinaggregate": [{
+            "op": "sum",
+            "field": "Calls not Answered",
+            "as": "groupTotal"
+          }],
+          "groupby": ["Agent", "Topic"]
+        },
+        {
+          "window": [{
+            "op": "sum",
+            "field": "Calls not Answered",
+            "as": "cumulative"
+          }],
+          "groupby": ["Agent"],
+          "sort": [{"field": "Topic"}]
+        },
+        {
+          "calculate": "datum.cumulative - datum['Calls not Answered']/2",
+          "as": "midpoint"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "y": {
+          "field": "Agent",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "midpoint",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "white"
+        },
+        "text": {
+          "field": "Calls not Answered",
+          "type": "quantitative"
+        },
+        "detail": {
+          "field": "Topic",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": 5
+      },
+      "encoding": {
+        "y": {
+          "field": "Agent",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "Calls not Answered",
+          "type": "quantitative",
+          "aggregate": "sum"
+        },
+        "text": {
+          "field": "Calls not Answered",
+          "type": "quantitative",
+          "aggregate": "sum"
+        }
+      }
+    }
+  ]
+}
